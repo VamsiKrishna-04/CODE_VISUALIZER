@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queue Visualization</title>
+    <link rel="stylesheet" href="queue.css">
+</head>
+<body>
+
+      <!-- Navbar -->
+      <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html">CODE VISUALIZER</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html" >Features</a></li>
+                    <li class="dropdown">
+                        <a href="sorting.html">Sorting</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="quick_sort.html">Quick Sort</a></li>
+                            <li><a href="merge_sort.html">Merge Sort</a></li>
+                            <li><a href="heap_sort.html">Heap Sort</a></li>
+                            <li><a href="insertion_sort.html">Insertion Sort</a></li>
+                            <li><a href="selection_sort.html">Selection Sort</a></li>
+                            <li><a href="bubble_sort.html">Bubble Sort</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="searching.html">Searching</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="linear_search.html">Linear Search</a></li>
+                            <li><a href="binary_search.html">Binary Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="stack_queue.html">Stack & Queue</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="stack.html">Stack</a></li>
+                            <li><a href="queue.html" class="active">Queue</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="linked_list.html">Linked Lists</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="single_linked_list.html">Single Linked List</a></li>
+                            <li><a href="double_linked_list.html">Double Linked List</a></li>
+                            <li><a href="circular_linked_list.html">Circular Linked List</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact_us.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    
+    <div class="container">
+        <!-- Visualization Section -->
+        <div class="visualization-section">
+            <header class="visualization-header">
+                <h1>Queue Operations</h1>
+            </header>
+
+            <!-- Queue Configuration Section -->
+            <section class="configuration-container">
+                <label for="maxSize">Enter Maximum Size of the Queue:</label>
+                <input type="number" id="maxSize" min="1" placeholder="Enter max size">
+                <button id="setMaxSize">Set Queue Size</button>
+            </section>
+
+            <!-- Controls Section -->
+            <section class="controls-container">
+                <div class="controls">
+                    <button id="enqueue" disabled>Enqueue</button>
+                    <button id="dequeue" disabled>Dequeue</button>
+                    <button id="peek" disabled>Peek</button>
+                    <button id="isEmpty" disabled>Check Empty</button>
+                    <button id="isFull" disabled>Check Full</button>
+                </div>
+            </section>
+
+            <!-- Queue Visualization -->
+            <section class="list-container" id="list-container">
+                <!-- Queue elements will be dynamically added here -->
+            </section>
+
+            <!-- Steps Section -->
+            <section class="steps-container">
+                <h2>Step-by-Step Process</h2>
+                <div id="steps-container">
+                    <!-- Steps will be dynamically added here -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Code Section -->
+        <div class="code-section">
+            <header class="code-header">
+                <h1>Queue Code</h1>
+            </header>
+            <pre id="queueCode">
+
+// Queue Using Array
+#include &lt;stdio.h&gt;
+#define MAX 100
+
+int queue[MAX];
+int front = -1;
+int rear = -1;
+
+void enqueue(int value) {
+    if (rear == MAX - 1) {
+        printf("Queue Overflow\\n");
+    } else {
+        if (front == -1) front = 0;
+        queue[++rear] = value;
+        printf("%d enqueued to queue\\n", value);
+    }
+}
+
+int dequeue() {
+    if (front == -1 || front > rear) {
+        printf("Queue Underflow\\n");
+        return -1;
+    } else {
+        return queue[front++];
+    }
+}
+
+int peek() {
+    if (front == -1 || front > rear) {
+        printf("Queue is Empty\\n");
+        return -1;
+    } else {
+        return queue[front];
+    }
+}
+
+int isEmpty() {
+    return front == -1 || front > rear;
+}
+
+
+
+
+
+
+
+
+
+
+
+// Queue Using Linked List
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* frontPtr = NULL;
+struct Node* rearPtr = NULL;
+
+void enqueueLL(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    if (rearPtr == NULL) {
+        frontPtr = rearPtr = newNode;
+    } else {
+        rearPtr->next = newNode;
+        rearPtr = newNode;
+    }
+    printf("%d enqueued to queue\\n", value);
+}
+
+int dequeueLL() {
+    if (frontPtr == NULL) {
+        printf("Queue Underflow\\n");
+        return -1;
+    } else {
+        int dequeuedValue = frontPtr->data;
+        struct Node* temp = frontPtr;
+        frontPtr = frontPtr->next;
+        if (frontPtr == NULL) rearPtr = NULL;
+        free(temp);
+        return dequeuedValue;
+    }
+}
+
+int peekLL() {
+    if (frontPtr == NULL) {
+        printf("Queue is Empty\\n");
+        return -1;
+    } else {
+        return frontPtr->data;
+    }
+}
+
+int isEmptyLL() {
+    return frontPtr == NULL;
+}
+
+int main() {
+    // Example usage for both implementations
+    enqueue(10);
+    enqueue(20);
+    printf("Front element is %d\\n", peek());
+    printf("%d dequeued from queue\\n", dequeue());
+
+    enqueueLL(30);
+    enqueueLL(40);
+    printf("Front element using linked list is %d\\n", peekLL());
+    printf("%d dequeued from linked list queue\\n", dequeueLL());
+
+    return 0;
+}
+
+            </pre>
+        </div>
+    </div>
+
+    <script src="queue.js"></script>
+</body>
+</html>

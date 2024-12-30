@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithms - CODE VISUALIZER</title>
+    <link rel="stylesheet" href="sorting.css">
+</head>
+<body>
+
+      <!-- Navbar -->
+      <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html">CODE VISUALIZER</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html" >Features</a></li>
+                    <li class="dropdown">
+                        <a href="sorting.html" class="active">Sorting</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="quick_sort.html">Quick Sort</a></li>
+                            <li><a href="merge_sort.html">Merge Sort</a></li>
+                            <li><a href="heap_sort.html">Heap Sort</a></li>
+                            <li><a href="insertion_sort.html">Insertion Sort</a></li>
+                            <li><a href="selection_sort.html">Selection Sort</a></li>
+                            <li><a href="bubble_sort.html">Bubble Sort</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="searching.html">Searching</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="linear_search.html">Linear Search</a></li>
+                            <li><a href="binary_search.html">Binary Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="stack_queue.html">Stack & Queue</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="stack.html">Stack</a></li>
+                            <li><a href="queue.html">Queue</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="linked_list.html">Linked Lists</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="single_linked_list.html">Single Linked List</a></li>
+                            <li><a href="double_linked_list.html">Double Linked List</a></li>
+                            <li><a href="circular_linked_list.html">Circular Linked List</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact_us.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    
+    
+
+    <!-- Sorting Algorithms Section -->
+    <main class="main-content">
+        <section class="sorting-overview">
+            <h1>Sorting Algorithms</h1>
+            <p>Sorting is the process of arranging data in a particular order, often ascending or descending. It plays a crucial role in improving data searchability and efficiency.</p>
+        </section>
+
+        <section class="sorting-algorithm">
+            <h2>1. Quick Sort</h2>
+            <p>Quick Sort is a divide-and-conquer algorithm that partitions the array into smaller sub-arrays and recursively sorts them.</p>
+            <p><strong>Time Complexity:</strong> 
+                <ul>
+                    <li>Best Case: O(n log n)</li>
+                    <li>Worst Case: O(n²)</li>
+                    <li>Average Case: O(n log n)</li>
+                </ul>
+            </p>
+            <pre>
+#include &lt;stdio.h&gt;
+
+void swap(int* a, int* b) {
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+int main() {
+    int arr[] = {10, 7, 8, 9, 1, 5};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    quickSort(arr, 0, n - 1);
+    printf("Sorted array: ");
+    for (int i = 0; i < n; i++) printf("%d ", arr[i]);
+    return 0;
+}
+            </pre>
+        </section>
+
+        <section class="sorting-algorithm">
+            <h2>2. Merge Sort</h2>
+            <p>Merge Sort divides the array into halves, sorts them recursively, and merges them back into a sorted array.</p>
+            <p><strong>Time Complexity:</strong> 
+                <ul>
+                    <li>Best Case: O(n log n)</li>
+                    <li>Worst Case: O(n log n)</li>
+                    <li>Average Case: O(n log n)</li>
+                </ul>
+            </p>
+            <pre>
+#include &lt;stdio.h&gt;
+
+void merge(int arr[], int l, int m, int r) {
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    int L[n1], R[n2];
+    for (int i = 0; i < n1; i++) L[i] = arr[l + i];
+    for (int j = 0; j < n2; j++) R[j] = arr[m + 1 + j];
+    int i = 0, j = 0, k = l;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) arr[k++] = L[i++];
+        else arr[k++] = R[j++];
+    }
+    while (i < n1) arr[k++] = L[i++];
+    while (j < n2) arr[k++] = R[j++];
+}
+
+void mergeSort(int arr[], int l, int r) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        merge(arr, l, m, r);
+    }
+}
+
+int main() {
+    int arr[] = {12, 11, 13, 5, 6, 7};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    mergeSort(arr, 0, n - 1);
+    printf("Sorted array: ");
+    for (int i = 0; i < n; i++) printf("%d ", arr[i]);
+    return 0;
+}
+            </pre>
+        </section>
+
+        <section class="sorting-algorithm">
+            <h2>3. Bubble Sort</h2>
+            <p>Bubble Sort repeatedly compares adjacent elements and swaps them if they are in the wrong order.</p>
+            <p><strong>Time Complexity:</strong> 
+                <ul>
+                    <li>Best Case: O(n)</li>
+                    <li>Worst Case: O(n²)</li>
+                    <li>Average Case: O(n²)</li>
+                </ul>
+            </p>
+            <pre>
+#include &lt;stdio.h&gt;
+
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    bubbleSort(arr, n);
+    printf("Sorted array: ");
+    for (int i = 0; i < n; i++) printf("%d ", arr[i]);
+    return 0;
+}
+            </pre>
+        </section>
+
+        <section class="sorting-algorithm">
+            <h2>4. Insertion Sort</h2>
+            <p>Insertion Sort builds the sorted array one element at a time by comparing and placing the elements in their correct position.</p>
+            <p><strong>Time Complexity:</strong> 
+                <ul>
+                    <li>Best Case: O(n)</li>
+                    <li>Worst Case: O(n²)</li>
+                    <li>Average Case: O(n²)</li>
+                </ul>
+            </p>
+            <pre>
+        #include &lt;stdio.h&gt;
+        
+        void insertionSort(int arr[], int n) {
+            for (int i = 1; i < n; i++) {
+                int key = arr[i];
+                int j = i - 1;
+                while (j >= 0 && arr[j] > key) {
+                    arr[j + 1] = arr[j];
+                    j--;
+                }
+                arr[j + 1] = key;
+            }
+        }
+        
+        int main() {
+            int arr[] = {12, 11, 13, 5, 6};
+            int n = sizeof(arr) / sizeof(arr[0]);
+            insertionSort(arr, n);
+            printf("Sorted array: ");
+            for (int i = 0; i < n; i++) printf("%d ", arr[i]);
+            return 0;
+        }
+            </pre>
+        </section>
+
+        <section class="sorting-algorithm">
+            <h2>5. Selection Sort</h2>
+            <p>Selection Sort repeatedly selects the smallest element from the unsorted part of the array and places it in its correct position.</p>
+            <p><strong>Time Complexity:</strong> 
+                <ul>
+                    <li>Best Case: O(n²)</li>
+                    <li>Worst Case: O(n²)</li>
+                    <li>Average Case: O(n²)</li>
+                </ul>
+            </p>
+            <pre>
+        #include &lt;stdio.h&gt;
+        
+        void selectionSort(int arr[], int n) {
+            for (int i = 0; i < n - 1; i++) {
+                int min_idx = i;
+                for (int j = i + 1; j < n; j++) {
+                    if (arr[j] < arr[min_idx]) min_idx = j;
+                }
+                int temp = arr[min_idx];
+                arr[min_idx] = arr[i];
+                arr[i] = temp;
+            }
+        }
+        
+        int main() {
+            int arr[] = {64, 25, 12, 22, 11};
+            int n = sizeof(arr) / sizeof(arr[0]);
+            selectionSort(arr, n);
+            printf("Sorted array: ");
+            for (int i = 0; i < n; i++) printf("%d ", arr[i]);
+            return 0;
+        }
+            </pre>
+        </section>
+
+        <section class="sorting-algorithm">
+            <h2>6. Heap Sort</h2>
+            <p>Heap Sort is a comparison-based sorting algorithm that uses a binary heap data structure to build a sorted array.</p>
+            <p><strong>Time Complexity:</strong> 
+                <ul>
+                    <li>Best Case: O(n log n)</li>
+                    <li>Worst Case: O(n log n)</li>
+                    <li>Average Case: O(n log n)</li>
+                </ul>
+            </p>
+            <pre>
+        #include &lt;stdio.h&gt;
+        
+        void heapify(int arr[], int n, int i) {
+            int largest = i;
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+        
+            if (left < n && arr[left] > arr[largest]) largest = left;
+            if (right < n && arr[right] > arr[largest]) largest = right;
+        
+            if (largest != i) {
+                int temp = arr[i];
+                arr[i] = arr[largest];
+                arr[largest] = temp;
+                heapify(arr, n, largest);
+            }
+        }
+        
+        void heapSort(int arr[], int n) {
+            for (int i = n / 2 - 1; i >= 0; i--) heapify(arr, n, i);
+            for (int i = n - 1; i >= 0; i--) {
+                int temp = arr[0];
+                arr[0] = arr[i];
+                arr[i] = temp;
+                heapify(arr, i, 0);
+            }
+        }
+        
+        int main() {
+            int arr[] = {12, 11, 13, 5, 6, 7};
+            int n = sizeof(arr) / sizeof(arr[0]);
+            heapSort(arr, n);
+            printf("Sorted array: ");
+            for (int i = 0; i < n; i++) printf("%d ", arr[i]);
+            return 0;
+        }
+            </pre>
+        </section>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 CODE VISUALIZER. All rights reserved.</p>
+    </footer>
+</body>
+</html>

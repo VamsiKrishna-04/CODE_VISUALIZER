@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack & Queue - CODE VISUALIZER</title>
+    <link rel="stylesheet" href="stack_queue.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html">CODE VISUALIZER</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html" >Features</a></li>
+                    <li class="dropdown">
+                        <a href="sorting.html" >Sorting</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="quick_sort.html">Quick Sort</a></li>
+                            <li><a href="merge_sort.html">Merge Sort</a></li>
+                            <li><a href="heap_sort.html">Heap Sort</a></li>
+                            <li><a href="insertion_sort.html">Insertion Sort</a></li>
+                            <li><a href="selection_sort.html">Selection Sort</a></li>
+                            <li><a href="bubble_sort.html">Bubble Sort</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="searching.html">Searching</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="linear_search.html">Linear Search</a></li>
+                            <li><a href="binary_search.html">Binary Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="stack_queue.html"   class="active">Stack & Queue</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="stack.html">Stack</a></li>
+                            <li><a href="queue.html">Queue</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="linked_list.html">Linked Lists</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="single_linked_list.html">Single Linked List</a></li>
+                            <li><a href="double_linked_list.html">Double Linked List</a></li>
+                            <li><a href="circular_linked_list.html">Circular Linked List</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact_us.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="overview">
+            <h1>Stack & Queue</h1>
+            <p>Stacks and Queues are fundamental data structures used to solve various computational problems. They provide different ways to store and process data.</p>
+        </section>
+
+        <!-- Stack Section -->
+        <section class="algorithm-section">
+            <h2>1. Stack</h2>
+            <p>A Stack is a linear data structure that follows the Last In, First Out (LIFO) principle. The last element added to the stack is the first to be removed.</p>
+            <ul>
+                <li><strong>Push:</strong> Add an element to the top of the stack.</li>
+                <li><strong>Pop:</strong> Remove the top element from the stack.</li>
+                <li><strong>Peek:</strong> View the top element without removing it.</li>
+            </ul>
+            <pre>
+#include &lt;stdio.h&gt;
+#define MAX 100
+
+int stack[MAX], top = -1;
+
+void push(int value) {
+    if (top == MAX - 1) {
+        printf("Stack Overflow\n");
+    } else {
+        stack[++top] = value;
+    }
+}
+
+int pop() {
+    if (top == -1) {
+        printf("Stack Underflow\n");
+        return -1;
+    } else {
+        return stack[top--];
+    }
+}
+
+int peek() {
+    if (top == -1) {
+        printf("Stack is empty\n");
+        return -1;
+    } else {
+        return stack[top];
+    }
+}
+
+int main() {
+    push(10);
+    push(20);
+    printf("Top element is %d\n", peek());
+    printf("Popped element is %d\n", pop());
+    return 0;
+}
+            </pre>
+        </section>
+
+        <!-- Queue Section -->
+        <section class="algorithm-section">
+            <h2>2. Queue</h2>
+            <p>A Queue is a linear data structure that follows the First In, First Out (FIFO) principle. The first element added to the queue is the first to be removed.</p>
+            <ul>
+                <li><strong>Enqueue:</strong> Add an element to the rear of the queue.</li>
+                <li><strong>Dequeue:</strong> Remove an element from the front of the queue.</li>
+                <li><strong>Front:</strong> View the front element without removing it.</li>
+            </ul>
+            <pre>
+#include &lt;stdio.h&gt;
+#define MAX 100
+
+int queue[MAX], front = -1, rear = -1;
+
+void enqueue(int value) {
+    if (rear == MAX - 1) {
+        printf("Queue Overflow\n");
+    } else {
+        if (front == -1) front = 0;
+        queue[++rear] = value;
+    }
+}
+
+int dequeue() {
+    if (front == -1 || front > rear) {
+        printf("Queue Underflow\n");
+        return -1;
+    } else {
+        return queue[front++];
+    }
+}
+
+int peek() {
+    if (front == -1 || front > rear) {
+        printf("Queue is empty\n");
+        return -1;
+    } else {
+        return queue[front];
+    }
+}
+
+int main() {
+    enqueue(10);
+    enqueue(20);
+    printf("Front element is %d\n", peek());
+    printf("Dequeued element is %d\n", dequeue());
+    return 0;
+}
+            </pre>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 CODE VISUALIZER. All rights reserved.</p>
+    </footer>
+</body>
+</html>

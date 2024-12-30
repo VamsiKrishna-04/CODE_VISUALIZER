@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge Sort Visualization</title>
+    <link rel="stylesheet" href="merge.css">
+</head>
+<body>
+  
+      <!-- Navbar -->
+      <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html">CODE VISUALIZER</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html" >Features</a></li>
+                    <li class="dropdown">
+                        <a href="sorting.html">Sorting</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="quick_sort.html">Quick Sort</a></li>
+                            <li><a href="merge_sort.html" class="active">Merge Sort</a></li>
+                            <li><a href="heap_sort.html">Heap Sort</a></li>
+                            <li><a href="insertion_sort.html">Insertion Sort</a></li>
+                            <li><a href="selection_sort.html">Selection Sort</a></li>
+                            <li><a href="bubble_sort.html">Bubble Sort</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="searching.html">Searching</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="linear_search.html">Linear Search</a></li>
+                            <li><a href="binary_search.html">Binary Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="stack_queue.html">Stack & Queue</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="stack.html">Stack</a></li>
+                            <li><a href="queue.html">Queue</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="linked_list.html">Linked Lists</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="single_linked_list.html">Single Linked List</a></li>
+                            <li><a href="double_linked_list.html">Double Linked List</a></li>
+                            <li><a href="circular_linked_list.html">Circular Linked List</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact_us.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    
+    <div class="container">
+        <!-- Visualization Section -->
+        <div class="visualization-section">
+            <header class="visualization-header">
+                <h1>Merge Sort Visualization</h1>
+            </header>
+
+            <!-- Controls Section -->
+            <section class="controls-container">
+                <div class="controls">
+                    <div class="control-item">
+                        <label for="arrayLength">Array Length:</label>
+                        <input type="number" id="arrayLength" min="2" max="50" value="5">
+                    </div>
+
+                    <div class="control-item">
+                        <label for="arrayValues">Array Values (comma-separated):</label>
+                        <input type="text" id="arrayValues" placeholder="e.g., 5,3,8,6,2">
+                    </div>
+
+                    <div class="control-item">
+                        <button id="generateArray">Generate Random Array</button>
+                        <button id="startSort">Start Sort</button>
+                    </div>
+
+                    <div class="control-item">
+                        <label for="speedControl">Speed Control (ms):</label>
+                        <input type="range" id="speedControl" min="500" max="5000" value="1000">
+                        <span id="speedValue">1000 ms</span>
+                    </div>
+
+                    <div class="control-item">
+                        <label for="pauseTime">Pause Between Phases (ms):</label>
+                        <input type="number" id="pauseTime" min="500" value="10000">
+                    </div>
+
+                    <div class="control-item">
+                        <button id="pauseResume">Pause</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sorting Visualization Area -->
+            <section class="sorting-container">
+                <div id="bars-container"></div>
+            </section>
+
+            <!-- Phases Section -->
+            <section class="steps-board">
+                <h3>Phases:</h3>
+                <div id="phasesBoard"></div>
+            </section>
+        </div>
+
+        <!-- Code Section -->
+        <div class="code-section">
+            <header class="code-header">
+                <h1>Merge Sort C Code</h1>
+            </header>
+            <pre id="mergeSortCode">
+
+   #include &lt;stdio.h&gt;
+   #include &lt;stdlib.h&gt;
+
+ void merge(int arr[], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    int leftArr[n1], rightArr[n2];
+
+    for (int i = 0; i < n1; i++)
+        leftArr[i] = arr[left + i];
+    for (int j = 0; j < n2; j++)
+        rightArr[j] = arr[mid + 1 + j];
+
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (leftArr[i] <= rightArr[j]) {
+            arr[k] = leftArr[i];
+            i++;
+        } else {
+            arr[k] = rightArr[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        arr[k] = leftArr[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        arr[k] = rightArr[j];
+        j++;
+        k++;
+    }
+}
+
+ void mergeSort(int arr[], int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+    }
+}
+
+ void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+ int main() {
+    int n;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+    printf("Enter %d elements:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Original array:\n");
+    printArray(arr, n);
+
+    mergeSort(arr, 0, n - 1);
+
+    printf("Sorted array:\n");
+    printArray(arr, n);
+
+    return 0;
+}
+            </pre>
+        </div>
+    </div>
+
+    <script src="merge.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Sort Visualization</title>
+    <link rel="stylesheet" href="bubble.css">
+</head>
+<body>
+
+      <!-- Navbar -->
+      <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html">CODE VISUALIZER</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html" >Features</a></li>
+                    <li class="dropdown">
+                        <a href="sorting.html">Sorting</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="quick_sort.html">Quick Sort</a></li>
+                            <li><a href="merge_sort.html">Merge Sort</a></li>
+                            <li><a href="heap_sort.html">Heap Sort</a></li>
+                            <li><a href="insertion_sort.html">Insertion Sort</a></li>
+                            <li><a href="selection_sort.html">Selection Sort</a></li>
+                            <li><a href="bubble_sort.html" class="active">Bubble Sort</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="searching.html">Searching</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="linear_search.html">Linear Search</a></li>
+                            <li><a href="binary_search.html">Binary Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="stack_queue.html">Stack & Queue</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="stack.html">Stack</a></li>
+                            <li><a href="queue.html">Queue</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="linked_list.html">Linked Lists</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="single_linked_list.html">Single Linked List</a></li>
+                            <li><a href="double_linked_list.html">Double Linked List</a></li>
+                            <li><a href="circular_linked_list.html">Circular Linked List</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact_us.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    
+    <div class="container">
+        <!-- Visualization Section -->
+        <div class="visualization-section">
+            <header class="visualization-header">
+                <h1>Bubble Sort Visualization</h1>
+            </header>
+
+            <!-- Controls Section -->
+            <section class="controls-container">
+                <div class="controls">
+                    <div class="control-item">
+                        <label for="arrayLength">Array Length:</label>
+                        <input type="number" id="arrayLength" min="2" max="50" value="5">
+                    </div>
+
+                    <div class="control-item">
+                        <label for="arrayValues">Array Values (comma-separated):</label>
+                        <input type="text" id="arrayValues" placeholder="e.g., 5,3,8,6,2">
+                    </div>
+
+                    <div class="control-item">
+                        <button id="generateArray">Generate Random Array</button>
+                        <button id="startSort">Start Sort</button>
+                    </div>
+
+                    <div class="control-item">
+                        <label for="speedControl">Speed Control (ms):</label>
+                        <input type="range" id="speedControl" min="500" max="5000" value="1000">
+                        <span id="speedValue">1000 ms</span>
+                    </div>
+
+                    <div class="control-item">
+                        <label for="pauseTime">Pause Between Phases (ms):</label>
+                        <input type="number" id="pauseTime" min="500" value="10000">
+                    </div>
+
+                    <div class="control-item">
+                        <button id="pauseResume">Pause</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sorting Visualization Area -->
+            <section class="sorting-container">
+                <div id="bars-container"></div>
+            </section>
+
+            <!-- Phases Section -->
+            <section class="steps-board">
+                <h3>Phases:</h3>
+                <div id="phasesBoard"></div>
+            </section>
+        </div>
+
+        <!-- Code Section -->
+        <div class="code-section">
+            <header class="code-header">
+                <h1>Bubble Sort C Code</h1>
+            </header>
+            <pre id="pythonProgram">
+#include &lt;stdio.h&gt;
+
+    // Function to perform bubble sort
+    void bubbleSort(int arr[], int n) {
+        for (int i = 0; i < n - 1; i++) {
+            // Flag to check if any swapping occurs
+            int swapped = 0;
+                    
+            // Compare adjacent elements
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    // Swap the elements
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    swapped = 1;
+                }
+            }
+                    
+            // If no swapping occurs, the array is already sorted
+            if (!swapped)
+                break;
+        }
+    }
+                    
+    // Function to print the array
+    void printArray(int arr[], int n) {
+        for (int i = 0; i < n; i++)
+            printf("%d ", arr[i]);
+        printf("\n");
+    }
+                    
+    // Main function
+    int main() {
+        int arr[] = {64, 34, 25, 12, 22, 11, 90};
+        int n = sizeof(arr) / sizeof(arr[0]);
+                    
+        printf("Original array:\n");
+        printArray(arr, n);
+                    
+        bubbleSort(arr, n);
+
+        printf("Sorted array:\n");
+        printArray(arr, n);
+
+        return 0;
+}                   
+            </pre>
+        </div>
+    </div>
+
+    <script src="bubble.js"></script>
+</body>
+</html>

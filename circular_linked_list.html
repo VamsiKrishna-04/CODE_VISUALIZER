@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circular Queue Visualization</title>
+    <link rel="stylesheet" href="circularqueue.css">
+</head>
+<body>
+ 
+      <!-- Navbar -->
+      <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html">CODE VISUALIZER</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html" >Features</a></li>
+                    <li class="dropdown">
+                        <a href="sorting.html">Sorting</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="quick_sort.html">Quick Sort</a></li>
+                            <li><a href="merge_sort.html">Merge Sort</a></li>
+                            <li><a href="heap_sort.html">Heap Sort</a></li>
+                            <li><a href="insertion_sort.html">Insertion Sort</a></li>
+                            <li><a href="selection_sort.html">Selection Sort</a></li>
+                            <li><a href="bubble_sort.html">Bubble Sort</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="searching.html">Searching</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="linear_search.html">Linear Search</a></li>
+                            <li><a href="binary_search.html">Binary Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="stack_queue.html">Stack & Queue</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="stack.html">Stack</a></li>
+                            <li><a href="queue.html">Queue</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="linked_list.html">Linked Lists</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="single_linked_list.html">Single Linked List</a></li>
+                            <li><a href="double_linked_list.html">Double Linked List</a></li>
+                            <li><a href="circular_linked_list.html" class="active">Circular Linked List</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact_us.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    
+    <div class="container">
+        <!-- Visualization Section -->
+        <div class="visualization-section">
+            <header class="visualization-header">
+                <h1>Circular Queue Operations</h1>
+            </header>
+
+            <!-- Circular Queue Configuration Section -->
+            <section class="configuration-container">
+                <label for="maxSize">Enter Maximum Size of the Circular Queue:</label>
+                <input type="number" id="maxSize" min="1" placeholder="Enter size (MAX size 20)">
+                <button id="setMaxSize">Set Queue Size</button>
+            </section>
+
+            <!-- Controls Section -->
+            <section class="controls-container">
+                <div class="controls">
+                    <button id="enqueue" disabled>Enqueue</button>
+                    <button id="dequeue" disabled>Dequeue</button>
+                    <button id="peekFront" disabled>Peek Front</button>
+                    <button id="peekRear" disabled>Peek Rear</button>
+                    <button id="isEmpty" disabled>Check Empty</button>
+                    <button id="isFull" disabled>Check Full</button>
+                </div>
+            </section>
+
+            <!-- Circular Queue Visualization -->
+            <section class="list-container" id="list-container">
+                <!-- Circular queue elements will be dynamically added here -->
+            </section>
+
+            <!-- Steps Section -->
+            <section class="steps-container">
+                <h2>Step-by-Step Process</h2>
+                <div id="steps-container">
+                    <!-- Steps will be dynamically added here -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Code Section -->
+        <div class="code-section">
+            <header class="code-header">
+                <h1>Circular Queue Code</h1>
+            </header>
+            <pre id="circularQueueCode">
+
+// Circular Queue Using Array
+#include &lt;stdio.h&gt;
+#define MAX 5
+
+int circularQueue[MAX];
+int front = -1, rear = -1;
+
+void enqueue(int value) {
+    if ((rear + 1) % MAX == front) {
+        printf("Queue Overflow\\n");
+    } else {
+        if (front == -1) front = 0;
+        rear = (rear + 1) % MAX;
+        circularQueue[rear] = value;
+        printf("%d enqueued to circular queue\\n", value);
+    }
+}
+
+int dequeue() {
+    if (front == -1) {
+        printf("Queue Underflow\\n");
+        return -1;
+    } else {
+        int dequeuedValue = circularQueue[front];
+        if (front == rear) {
+            front = rear = -1;
+        } else {
+            front = (front + 1) % MAX;
+        }
+        return dequeuedValue;
+    }
+}
+
+int peekFront() {
+    if (front == -1) {
+        printf("Queue is Empty\\n");
+        return -1;
+    } else {
+        return circularQueue[front];
+    }
+}
+
+int peekRear() {
+    if (rear == -1) {
+        printf("Queue is Empty\\n");
+        return -1;
+    } else {
+        return circularQueue[rear];
+    }
+}
+
+
+
+
+
+
+
+
+
+// Circular Queue Using Linked List
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* frontPtr = NULL;
+struct Node* rearPtr = NULL;
+
+void enqueueLL(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    if (rearPtr == NULL) {
+        frontPtr = rearPtr = newNode;
+        rearPtr->next = frontPtr;
+    } else {
+        rearPtr->next = newNode;
+        rearPtr = newNode;
+        rearPtr->next = frontPtr;
+    }
+    printf("%d enqueued to circular queue\\n", value);
+}
+
+int dequeueLL() {
+    if (frontPtr == NULL) {
+        printf("Queue Underflow\\n");
+        return -1;
+    } else {
+        int dequeuedValue = frontPtr->data;
+        if (frontPtr == rearPtr) {
+            free(frontPtr);
+            frontPtr = rearPtr = NULL;
+        } else {
+            struct Node* temp = frontPtr;
+            frontPtr = frontPtr->next;
+            rearPtr->next = frontPtr;
+            free(temp);
+        }
+        return dequeuedValue;
+    }
+}
+
+int peekFrontLL() {
+    if (frontPtr == NULL) {
+        printf("Queue is Empty\\n");
+        return -1;
+    } else {
+        return frontPtr->data;
+    }
+}
+
+int peekRearLL() {
+    if (rearPtr == NULL) {
+        printf("Queue is Empty\\n");
+        return -1;
+    } else {
+        return rearPtr->data;
+    }
+}
+
+int main() {
+    // Example usage for both implementations
+    enqueue(10);
+    enqueue(20);
+    printf("Front element is %d\\n", peekFront());
+    printf("%d dequeued from queue\\n", dequeue());
+
+    enqueueLL(30);
+    enqueueLL(40);
+    printf("Front element using linked list is %d\\n", peekFrontLL());
+    printf("%d dequeued from linked list queue\\n", dequeueLL());
+
+    return 0;
+}
+
+            </pre>
+        </div>
+    </div>
+   
+    
+    <script src="circularqueue.js"></script>
+</body>
+</html>

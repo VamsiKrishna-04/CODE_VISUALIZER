@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heap Sort Visualization</title>
+    <link rel="stylesheet" href="heap.css">
+</head>
+<body>
+
+      <!-- Navbar -->
+      <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html">CODE VISUALIZER</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html" >Features</a></li>
+                    <li class="dropdown">
+                        <a href="sorting.html">Sorting</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="quick_sort.html">Quick Sort</a></li>
+                            <li><a href="merge_sort.html">Merge Sort</a></li>
+                            <li><a href="heap_sort.html" class="active">Heap Sort</a></li>
+                            <li><a href="insertion_sort.html">Insertion Sort</a></li>
+                            <li><a href="selection_sort.html">Selection Sort</a></li>
+                            <li><a href="bubble_sort.html">Bubble Sort</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="searching.html">Searching</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="linear_search.html">Linear Search</a></li>
+                            <li><a href="binary_search.html">Binary Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="stack_queue.html">Stack & Queue</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="stack.html">Stack</a></li>
+                            <li><a href="queue.html">Queue</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="linked_list.html">Linked Lists</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="single_linked_list.html">Single Linked List</a></li>
+                            <li><a href="double_linked_list.html">Double Linked List</a></li>
+                            <li><a href="circular_linked_list.html">Circular Linked List</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact_us.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    
+    <div class="container">
+        <!-- Visualization Section -->
+        <div class="visualization-section">
+            <header class="visualization-header">
+                <h1>Heap Sort Visualization</h1>
+            </header>
+
+            <!-- Controls Section -->
+            <section class="controls-container">
+                <div class="controls">
+                    <div class="control-item">
+                        <label for="arrayLength">Array Length:</label>
+                        <input type="number" id="arrayLength" min="2" max="50" value="5">
+                    </div>
+
+                    <div class="control-item">
+                        <label for="arrayValues">Array Values (comma-separated):</label>
+                        <input type="text" id="arrayValues" placeholder="e.g., 5,3,8,6,2">
+                    </div>
+
+                    <div class="control-item">
+                        <button id="generateArray">Generate Random Array</button>
+                        <button id="startSort">Start Sort</button>
+                    </div>
+
+                    <div class="control-item">
+                        <label for="speedControl">Speed Control (ms):</label>
+                        <input type="range" id="speedControl" min="500" max="5000" value="1000">
+                        <span id="speedValue">1000 ms</span>
+                    </div>
+
+                    <div class="control-item">
+                        <label for="pauseTime">Pause Between Phases (ms):</label>
+                        <input type="number" id="pauseTime" min="500" value="10000">
+                    </div>
+
+                    <div class="control-item">
+                        <button id="pauseResume">Pause</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sorting Visualization Area -->
+            <section class="sorting-container">
+                <div id="bars-container"></div>
+            </section>
+
+            <!-- Phases Section -->
+            <section class="steps-board">
+                <h3>Phases:</h3>
+                <div id="phasesBoard"></div>
+            </section>
+        </div>
+
+        <!-- Code Section -->
+        <div class="code-section">
+            <header class="code-header">
+                <h1>Heap Sort C Code</h1>
+            </header>
+            <pre id="mergeSortCode">
+
+#include &lt;stdio.h&gt;
+
+    // Function to swap two elements
+    void swap(int* a, int* b) {
+        int temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+    
+    // Function to heapify a subtree rooted at index `i`
+    void heapify(int arr[], int n, int i) {
+        int largest = i;        // Initialize largest as root
+        int left = 2 * i + 1;   // Left child
+        int right = 2 * i + 2;  // Right child
+    
+        // If left child is larger than root
+        if (left < n && arr[left] > arr[largest])
+            largest = left;
+    
+        // If right child is larger than largest so far
+        if (right < n && arr[right] > arr[largest])
+            largest = right;
+    
+        // If largest is not root
+        if (largest != i) {
+            swap(&arr[i], &arr[largest]);
+    
+            // Recursively heapify the affected subtree
+            heapify(arr, n, largest);
+        }
+    }
+    
+    // Main function to perform Heap Sort
+    void heapSort(int arr[], int n) {
+        // Build max heap
+        for (int i = n / 2 - 1; i >= 0; i--)
+            heapify(arr, n, i);
+    
+        // Extract elements from heap one by one
+        for (int i = n - 1; i > 0; i--) {
+            // Move current root to end
+            swap(&arr[0], &arr[i]);
+    
+            // Call heapify on the reduced heap
+            heapify(arr, i, 0);
+        }
+    }
+    
+    // Function to print an array
+    void printArray(int arr[], int n) {
+        for (int i = 0; i < n; i++)
+            printf("%d ", arr[i]);
+        printf("\n");
+    }
+    
+    // Main program
+    int main() {
+        int arr[] = {12, 11, 13, 5, 6, 7};
+        int n = sizeof(arr) / sizeof(arr[0]);
+    
+        printf("Original array:\n");
+        printArray(arr, n);
+    
+        heapSort(arr, n);
+    
+        printf("Sorted array:\n");
+        printArray(arr, n);
+    
+        return 0;
+    }
+    
+
+            </pre>
+        </div>
+    </div>
+
+    <script src="heap.js"></script>
+</body>
+</html>

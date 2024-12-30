@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack Visualization</title>
+    <link rel="stylesheet" href="stack.css">
+</head>
+<body>
+
+      <!-- Navbar -->
+      <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html">CODE VISUALIZER</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html" >Features</a></li>
+                    <li class="dropdown">
+                        <a href="sorting.html">Sorting</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="quick_sort.html">Quick Sort</a></li>
+                            <li><a href="merge_sort.html">Merge Sort</a></li>
+                            <li><a href="heap_sort.html">Heap Sort</a></li>
+                            <li><a href="insertion_sort.html">Insertion Sort</a></li>
+                            <li><a href="selection_sort.html">Selection Sort</a></li>
+                            <li><a href="bubble_sort.html">Bubble Sort</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="searching.html">Searching</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="linear_search.html">Linear Search</a></li>
+                            <li><a href="binary_search.html">Binary Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="stack_queue.html">Stack & Queue</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="stack.html" class="active">Stack</a></li>
+                            <li><a href="queue.html">Queue</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="linked_list.html">Linked Lists</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="single_linked_list.html">Single Linked List</a></li>
+                            <li><a href="double_linked_list.html">Double Linked List</a></li>
+                            <li><a href="circular_linked_list.html">Circular Linked List</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact_us.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    
+    <div class="container">
+        <!-- Visualization Section -->
+        <div class="visualization-section">
+            <header class="visualization-header">
+                <h1>Stack Operations</h1>
+            </header>
+
+            <!-- Stack Configuration Section -->
+            <section class="configuration-container">
+                <label for="maxSize">Enter Maximum Size of the Stack:</label>
+                <input type="number" id="maxSize" min="1" placeholder="Enter max size">
+                <button id="setMaxSize">Set Stack Size</button>
+            </section>
+
+            <!-- Controls Section -->
+            <section class="controls-container">
+                <div class="controls">
+                    <button id="push" disabled>Push</button>
+                    <button id="pop" disabled>Pop</button>
+                    <button id="peek" disabled>Peek</button>
+                    <button id="isEmpty" disabled>Check Empty</button>
+                    <button id="isFull" disabled>Check Full</button>
+                </div>
+            </section>
+
+            <!-- Stack Visualization -->
+            <section class="list-container" id="list-container">
+                <!-- Stack elements will be dynamically added here -->
+            </section>
+
+            <!-- Steps Section -->
+            <section class="steps-container">
+                <h2>Step-by-Step Process</h2>
+                <div id="steps-container">
+                    <!-- Steps will be dynamically added here -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Code Section -->
+        <div class="code-section">
+            <header class="code-header">
+                <h1>Stack Code</h1>
+            </header>
+            <pre id="stackCode">
+
+// Stack Using Array
+#include &lt;stdio.h&gt;
+#define MAX 100
+
+int stack[MAX];
+int top = -1;
+
+void push(int value) {
+    if (top == MAX - 1) {
+        printf("Stack Overflow\\n");
+    } else {
+        stack[++top] = value;
+        printf("%d pushed to stack\\n", value);
+    }
+}
+
+int pop() {
+    if (top == -1) {
+        printf("Stack Underflow\\n");
+        return -1;
+    } else {
+        return stack[top--];
+    }
+}
+
+int peek() {
+    if (top == -1) {
+        printf("Stack is Empty\\n");
+        return -1;
+    } else {
+        return stack[top];
+    }
+}
+
+int isEmpty() {
+    return top == -1;
+}
+
+
+
+
+
+
+
+
+
+
+// Stack Using Pointers
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* topPtr = NULL;
+
+void pushPtr(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = topPtr;
+    topPtr = newNode;
+    printf("%d pushed to stack\\n", value);
+}
+
+int popPtr() {
+    if (!topPtr) {
+        printf("Stack Underflow\\n");
+        return -1;
+    } else {
+        int poppedValue = topPtr->data;
+        struct Node* temp = topPtr;
+        topPtr = topPtr->next;
+        free(temp);
+        return poppedValue;
+    }
+}
+
+int peekPtr() {
+    if (!topPtr) {
+        printf("Stack is Empty\\n");
+        return -1;
+    } else {
+        return topPtr->data;
+    }
+}
+
+int isEmptyPtr() {
+    return topPtr == NULL;
+}
+
+int main() {
+    // Example usage for both implementations
+    push(10);
+    push(20);
+    printf("Top element is %d\\n", peek());
+    printf("%d popped from stack\\n", pop());
+
+    pushPtr(30);
+    pushPtr(40);
+    printf("Top element using pointer stack is %d\\n", peekPtr());
+    printf("%d popped from pointer stack\\n", popPtr());
+
+    return 0;
+}
+
+            </pre>
+        </div>
+    </div>
+
+    <script src="stack.js"></script>
+</body>
+</html>

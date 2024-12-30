@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linked Lists - CODE VISUALIZER</title>
+    <link rel="stylesheet" href="linked_list.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html">CODE VISUALIZER</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html" >Features</a></li>
+                    <li class="dropdown">
+                        <a href="sorting.html" >Sorting</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="quick_sort.html">Quick Sort</a></li>
+                            <li><a href="merge_sort.html">Merge Sort</a></li>
+                            <li><a href="heap_sort.html">Heap Sort</a></li>
+                            <li><a href="insertion_sort.html">Insertion Sort</a></li>
+                            <li><a href="selection_sort.html">Selection Sort</a></li>
+                            <li><a href="bubble_sort.html">Bubble Sort</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="searching.html">Searching</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="linear_search.html">Linear Search</a></li>
+                            <li><a href="binary_search.html">Binary Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="stack_queue.html">Stack & Queue</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="stack.html">Stack</a></li>
+                            <li><a href="queue.html">Queue</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="linked_list.html"   class="active">Linked Lists</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="single_linked_list.html">Single Linked List</a></li>
+                            <li><a href="double_linked_list.html">Double Linked List</a></li>
+                            <li><a href="circular_linked_list.html">Circular Linked List</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact_us.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="overview">
+            <h1>Linked Lists</h1>
+            <p>Linked Lists are a fundamental data structure where elements are stored in nodes, with each node pointing to the next node in the sequence. They provide efficient insertion and deletion operations compared to arrays.</p>
+        </section>
+
+        <!-- Single Linked List Section -->
+        <section class="algorithm-section" id="single-linked-list">
+            <h2>1. Single Linked List</h2>
+            <p>A Single Linked List is a linear data structure where each node points to the next node, forming a chain.</p>
+            <ul>
+                <li>Traversal is possible in one direction.</li>
+                <li>Efficient for dynamic memory allocation.</li>
+                <li>Insertion and deletion are efficient.</li>
+            </ul>
+            <pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void insertAtEnd(struct Node** head, int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* temp = *head;
+    newNode->data = data;
+    newNode->next = NULL;
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+
+void display(struct Node* head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+    insertAtEnd(&head, 10);
+    insertAtEnd(&head, 20);
+    insertAtEnd(&head, 30);
+    display(head);
+    return 0;
+}
+            </pre>
+        </section>
+
+        <!-- Double Linked List Section -->
+        <section class="algorithm-section" id="double-linked-list">
+            <h2>2. Double Linked List</h2>
+            <p>A Double Linked List is a data structure where each node points to both the next and previous nodes, allowing traversal in both directions.</p>
+            <ul>
+                <li>Traversal is possible in both directions.</li>
+                <li>Efficient for insertion and deletion operations.</li>
+            </ul>
+            <pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node* next;
+    struct Node* prev;
+};
+
+void insertAtEnd(struct Node** head, int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* temp = *head;
+    newNode->data = data;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    newNode->prev = temp;
+}
+
+void display(struct Node* head) {
+    while (head != NULL) {
+        printf("%d <-> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+    insertAtEnd(&head, 10);
+    insertAtEnd(&head, 20);
+    insertAtEnd(&head, 30);
+    display(head);
+    return 0;
+}
+            </pre>
+        </section>
+
+        <!-- Circular Linked List Section -->
+        <section class="algorithm-section" id="circular-linked-list">
+            <h2>3. Circular Linked List</h2>
+            <p>A Circular Linked List is a data structure where the last node points back to the first node, forming a circle.</p>
+            <ul>
+                <li>Traversal can continue indefinitely.</li>
+                <li>Efficient for queue-like operations.</li>
+            </ul>
+            <pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void insertAtEnd(struct Node** head, int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* temp = *head;
+    newNode->data = data;
+    newNode->next = *head;
+    if (*head == NULL) {
+        *head = newNode;
+        newNode->next = *head;
+        return;
+    }
+    while (temp->next != *head) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+
+void display(struct Node* head) {
+    if (head == NULL) return;
+    struct Node* temp = head;
+    do {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    } while (temp != head);
+    printf("HEAD\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+    insertAtEnd(&head, 10);
+    insertAtEnd(&head, 20);
+    insertAtEnd(&head, 30);
+    display(head);
+    return 0;
+}
+            </pre>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 CODE VISUALIZER. All rights reserved.</p>
+    </footer>
+</body>
+</html>

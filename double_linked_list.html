@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doubly Linked List Visualization</title>
+    <link rel="stylesheet" href="double.css">
+</head>
+<body>
+
+     <!-- Navbar -->
+     <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html">CODE VISUALIZER</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#">Sorting</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="quick_sort.html">Quick Sort</a></li>
+                            <li><a href="merge_sort.html">Merge Sort</a></li>
+                            <li><a href="heap_sort.html">Heap Sort</a></li>
+                            <li><a href="insertion_sort.html">Insertion Sort</a></li>
+                            <li><a href="selection_sort.html">Selection Sort</a></li>
+                            <li><a href="bubble_sort.html">Bubble Sort</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Searching</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="linear_search.html">Linear Search</a></li>
+                            <li><a href="binary_search.html">Binary Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Stack & Queue</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="stack.html">Stack</a></li>
+                            <li><a href="queue.html">Queue</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Linked Lists</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="single_linked_list.html">Single Linked List</a></li>
+                            <li><a href="double_linked_list.html" class="active">Double Linked List</a></li>
+                            <li><a href="circular_linked_list.html">Circular Linked List</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact_us.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Visualization Section -->
+        <div class="visualization-section">
+            <header class="visualization-header">
+                <h1>Doubly Linked List Operations</h1>
+            </header>
+
+            <!-- Controls Section -->
+            <section class="controls-container">
+                <div class="controls">
+                    <button id="createNode">Create Node</button>
+                    <button id="insertNode">Insert Node</button>
+                    <button id="deleteNode">Delete Node</button>
+                    <button id="traverseForward">Traverse Forward</button>
+                    <button id="traverseBackward">Traverse Backward</button>
+                    <button id="searchNode">Search Node</button>
+                </div>
+            </section>
+
+            <!-- Doubly Linked List Visualization -->
+            <section class="list-container" id="list-container">
+                <!-- Nodes will be dynamically added here -->
+            </section>
+
+            <!-- Steps Section -->
+            <section class="steps-container">
+                <h2>Step-by-Step Process</h2>
+                <div id="steps-container">
+                    <!-- Steps will be dynamically added here -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Code Section -->
+        <div class="code-section">
+            <header class="code-header">
+                <h1>Doubly Linked List C Code</h1>
+            </header>
+            <pre id="linkedListCode">
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* next;
+    struct Node* prev;
+};
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    return newNode;
+}
+
+// Function to insert a node at the end
+void insertNode(struct Node** head, int data) {
+    struct Node* newNode = createNode(data);
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+    struct Node* temp = *head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    newNode->prev = temp;
+}
+
+// Function to delete a node by value
+void deleteNode(struct Node** head, int key) {
+    struct Node* temp = *head;
+
+    while (temp != NULL && temp->data != key) {
+        temp = temp->next;
+    }
+
+    if (temp == NULL) return;
+
+    if (temp->prev != NULL) {
+        temp->prev->next = temp->next;
+    } else {
+        *head = temp->next;
+    }
+
+    if (temp->next != NULL) {
+        temp->next->prev = temp->prev;
+    }
+
+    free(temp);
+}
+
+// Function to traverse the list forward
+void traverseForward(struct Node* head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\\n");
+}
+
+// Function to traverse the list backward
+void traverseBackward(struct Node* tail) {
+    while (tail != NULL) {
+        printf("%d -> ", tail->data);
+        tail = tail->prev;
+    }
+    printf("NULL\\n");
+}
+
+// Function to search for a value in the doubly linked list
+int searchNode(struct Node* head, int key) {
+    int position = 0;
+    while (head != NULL) {
+        if (head->data == key) {
+            return position;
+        }
+        head = head->next;
+        position++;
+    }
+    return -1;
+}
+
+// Main function
+int main() {
+    struct Node* head = NULL;
+
+    // Example usage
+    insertNode(&head, 10);
+    insertNode(&head, 20);
+    insertNode(&head, 30);
+
+    printf("Doubly Linked List Forward: ");
+    traverseForward(head);
+
+    printf("Deleting node with value 20\\n");
+    deleteNode(&head, 20);
+
+    printf("Doubly Linked List after deletion: ");
+    traverseForward(head);
+
+    int key = 30;
+    int position = searchNode(head, key);
+    if (position != -1) {
+        printf("Value %d found at position %d\\n", key, position);
+    } else {
+        printf("Value %d not found in the list\\n", key);
+    }
+
+    return 0;
+}
+
+            </pre>
+        </div>
+    </div>
+
+    <script src="double.js"></script>
+</body>
+</html>

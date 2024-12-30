@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CODE VISUALIZER</title>
+    <link rel="stylesheet" href="searching.css">
+</head>
+<body>
+
+      <!-- Navbar -->
+      <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html">CODE VISUALIZER</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html" >Features</a></li>
+                    <li class="dropdown">
+                        <a href="sorting.html" >Sorting</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="quick_sort.html">Quick Sort</a></li>
+                            <li><a href="merge_sort.html">Merge Sort</a></li>
+                            <li><a href="heap_sort.html">Heap Sort</a></li>
+                            <li><a href="insertion_sort.html">Insertion Sort</a></li>
+                            <li><a href="selection_sort.html">Selection Sort</a></li>
+                            <li><a href="bubble_sort.html">Bubble Sort</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="searching.html"  class="active">Searching</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="linear_search.html">Linear Search</a></li>
+                            <li><a href="binary_search.html">Binary Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="stack_queue.html">Stack & Queue</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="stack.html">Stack</a></li>
+                            <li><a href="queue.html">Queue</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="linked_list.html">Linked Lists</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="single_linked_list.html">Single Linked List</a></li>
+                            <li><a href="double_linked_list.html">Double Linked List</a></li>
+                            <li><a href="circular_linked_list.html">Circular Linked List</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact_us.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Searching Overview -->
+        <section class="searching-overview">
+            <h1>Searching Algorithms</h1>
+            <p>Learn how to efficiently search for elements in datasets using Linear Search and Binary Search.</p>
+        </section>
+
+        <!-- Linear Search -->
+        <section class="searching-algorithm">
+            <h2>Linear Search</h2>
+            <p>Linear Search is the simplest search algorithm. It works by sequentially checking each element of the dataset until the desired element is found or the list ends.</p>
+            <ul>
+                <li>Time Complexity: O(n)</li>
+                <li>Space Complexity: O(1)</li>
+                <li>Best used for unsorted datasets or small data sizes.</li>
+            </ul>
+            <pre>
+function linearSearch(arr, target) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === target) {
+            return i; // Target found
+        }
+    }
+    return -1; // Target not found
+}
+            </pre>
+        </section>
+
+        <!-- Binary Search -->
+        <section class="searching-algorithm">
+            <h2>Binary Search</h2>
+            <p>Binary Search is a fast algorithm for searching in sorted datasets. It repeatedly divides the search interval in half until the target is found or the interval is empty.</p>
+            <ul>
+                <li>Time Complexity: O(log n)</li>
+                <li>Space Complexity: O(1) for iterative, O(log n) for recursive</li>
+                <li>Best used for sorted datasets.</li>
+            </ul>
+            <pre>
+function binarySearch(arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
+
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+
+        if (arr[mid] === target) {
+            return mid; // Target found
+        } else if (arr[mid] < target) {
+            left = mid + 1; // Search the right half
+        } else {
+            right = mid - 1; // Search the left half
+        }
+    }
+    return -1; // Target not found
+}
+            </pre>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 SearchMaster. All rights reserved.
+    </footer>
+</body>
+</html>
